@@ -3,7 +3,8 @@ package com.example.bamble.my_android_app_practice;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.InputType;
+import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -79,15 +80,21 @@ public class MainActivity extends Activity {
         show.setOnTouchListener(new View.OnTouchListener(){
             @Override
             public boolean onTouch(View v, MotionEvent event){
+                final int cursor = password.getSelectionStart();
                 switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
-                        password.setInputType(InputType.TYPE_CLASS_TEXT);
-                        break;
-                    case MotionEvent.ACTION_UP:
-                        password.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                        Log.d("Classname","ACTION_DOWN");
+                        password.setTransformationMethod(null);
+                        password.setSelection(cursor);
                         break;
                     case MotionEvent.ACTION_CANCEL:
-                        password.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                        password.setTransformationMethod(new PasswordTransformationMethod());
+                        password.setSelection(cursor);
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        Log.d("Classname","ACTION_UP");
+                        password.setTransformationMethod(new PasswordTransformationMethod());
+                        password.setSelection(cursor);
                         break;
                 }
                 return true;
